@@ -20,12 +20,13 @@
         a:layout_width="match_parent"
         a:layout_height="match_parent"
         a:layout_weight="1"
+        a:weightSum="8"
         a:orientation="horizontal">
 
         <LinearLayout
             a:layout_width="match_parent"
             a:layout_height="match_parent"
-            a:layout_weight="1"
+            a:layout_weight="7"
             a:orientation="vertical">
 
             <LinearLayout
@@ -84,12 +85,13 @@
         </LinearLayout>
 
         <TextView
-            a:id="@+id/deleteButton"
+            a:id="@+id/inviteButton"
             a:layout_width="40dp"
             a:layout_height="match_parent"
             a:layout_weight="1"
+            a:drawableLeft="@drawable/ic_plus"
+            a:drawablePadding="0dp"
             a:gravity="center"
-            a:text="@string/delete"
             a:textSize="24sp" />
 
     </LinearLayout>

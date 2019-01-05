@@ -1,5 +1,6 @@
 package com.example.myapplication.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.ContactsActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.github.nkzawa.socketio.client.IO;
@@ -37,6 +39,17 @@ public class ChatBoxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_box);
+
+        Button fab = findViewById(R.id.chatplus_button);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent contactIntent = new Intent(getApplicationContext(), ContactsActivity.class);
+                startActivity(contactIntent);
+            }
+        });
+
         messagetxt = (EditText) findViewById(R.id.message) ;
         send = (Button)findViewById(R.id.send);        // get the nickame of the user
         Nickname= (String)getIntent().getExtras().getString(MainActivity.NICKNAME);        //connect you socket client to the server
@@ -103,7 +116,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                             Message m = new Message(nickname,message);
                             // add the message to the messageList
                             MessageList.add(m);
-                            // add the new updated list to the dapter
+                            // add the new updated list to the adapter
                             chatBoxAdapter = new ChatBoxAdapter(MessageList);
                             // notify the adapter to update the recycler view
                             chatBoxAdapter.notifyDataSetChanged();

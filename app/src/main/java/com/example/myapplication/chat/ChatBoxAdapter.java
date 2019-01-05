@@ -15,11 +15,11 @@ import java.util.List;
 public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHolder> {
     private List<Message> MessageList;
     public  class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView nickname;
+        public TextView username;
         public TextView message;
         public MyViewHolder(View view) {
             super(view);
-            nickname = (TextView) view.findViewById(R.id.nickname);
+            username = (TextView) view.findViewById(R.id.name);
             message = (TextView) view.findViewById(R.id.message);
         }
     }
@@ -39,7 +39,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
         @Override
         public void onBindViewHolder(final ChatBoxAdapter.MyViewHolder holder, final int position) {
         final Message m = MessageList.get(position);
-        holder.nickname.setText(m.getNickname() +" : ");
+        holder.username.setText(m.getNickname() +" : ");
         holder.message.setText(m.getMessage() );
     }
 }

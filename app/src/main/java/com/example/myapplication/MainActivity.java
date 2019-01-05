@@ -1,7 +1,11 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btn;
     private EditText nickname;
     public static final String NICKNAME = "usernickname";
+    private final int MY_PERMISSIONS_REQUEST = 100;
+    private boolean isPermissionGranted = false;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyService iMyService; //보낼 data 형식 정의
@@ -66,11 +72,35 @@ public class MainActivity extends AppCompatActivity {
         //activity main 레이아웃을 표시
 
         setContentView(R.layout.activity_facebook);
+    // Permission request  WRITE_EXTERNAL_STORAGE
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_CONTACTS,
+                            Manifest.permission.CALL_PHONE,
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_CONTACTS,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST);
+        }
+        else
+            isPermissionGranted = true;
+
+        if (isPermissionGranted) {
+            setContentView(R.layout.activity_facebook);
+        }
+
 
         Retrofit retrofitClient = RetrofitClient.getInstance(); //data 보내기
 
         iMyService = retrofitClient.create(IMyService.class);
-
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -110,19 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Main 화면의 +버튼을 누를 시 새로운 채팅방을 만들기 위해 가지고 있는 전화번호부 목록으로 넘어가는 intent 설정
-        android.support.design.widget.FloatingActionButton fab = findViewById(R.id.chatplus_button);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Hello", "Intent Start");
-                Intent contactIntent = new Intent(getApplicationContext(), ContactsActivity.class);
-                startActivity(contactIntent);
-            }
-        });
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -189,7 +208,8 @@ public class MainActivity extends AppCompatActivity {
                             ID=id;
                             NAME=name;
                             Intent i = new Intent(getApplicationContext(), ChatBoxActivity.class);
-                            i.putExtra(id,name);
+                            i.putExtra("id", ID);
+                            i.putExtra("name", NAME);
                             startActivity(i);
                         }
                     }

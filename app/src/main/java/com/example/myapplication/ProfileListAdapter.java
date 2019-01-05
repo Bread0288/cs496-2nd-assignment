@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +74,7 @@ public class ProfileListAdapter extends BaseAdapter {
         LinearLayout make_call = convertView.findViewById(R.id.phone_layout);
         LinearLayout make_mail = convertView.findViewById(R.id.email_layout);
         TextView modify_contact = convertView.findViewById(R.id.name);
-        TextView delete_contact = convertView.findViewById(R.id.deleteButton);
+        TextView invite_contact = convertView.findViewById(R.id.inviteButton);
 
         make_call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,39 +106,43 @@ public class ProfileListAdapter extends BaseAdapter {
                 _context.startActivity(contactIntent);
             }
         });
-        delete_contact.setOnClickListener(new View.OnClickListener() {
+        invite_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog diaBox = AskOption(profile.getContactUri(), profile.getName());
+                AlertDialog diaBox = AskOption(profile.getPhone(), profile.getName());
                 diaBox.show();
             }
         });
 
         return convertView;
     }
-    private AlertDialog AskOption(final Uri targetUri, String name)
+    private AlertDialog AskOption(final String phone, String name)
     {
+        Log.e("SMS",phone);
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(_context)
                 //set message, title, and icon
-                .setTitle("Delete")
-                .setMessage("Do you want to delete the contact of "+name+"?")
-
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setTitle("Invite")
+                .setMessage("CHATAPP으로 "+name+"님을 초대하시겠습니까? 확인을 누르시면 초대 메세지가 발송됩니다.")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        _context.getContentResolver().delete(targetUri,null,null);
-                        _listener.reloadContacts();
+                        Log.e("SMS",phone);
+                        SmsManager sms = SmsManager.getDefault();
+                        sms.sendTextMessage
+                                (phone, null, "CHATAPP을 설치하고 친구와 채팅을 즐기세요!\n https://github.com/Bread0288/cs496-2nd-assignment", null, null);
+                        Log.e("SMS",phone);
                         dialog.dismiss();
                     }
 
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        Log.e("SMS",phone);
                         dialog.dismiss();
                     }
                 })
                 .create();
+        Log.e("SMS",phone);
         return myQuittingDialogBox;
-
     }
 }
