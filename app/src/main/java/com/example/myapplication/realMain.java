@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.myapplication.Retrofit.IMyService;
 import com.example.myapplication.Retrofit.RetrofitClient;
+import com.example.myapplication.chat.ChatBoxActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -41,7 +42,9 @@ import org.json.*;
 public class realMain extends AppCompatActivity {
 
     private CallbackManager callbackManager;
-
+    public String ID;
+    public String NAME;
+    public String PHONE;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyService iMyService; //보낼 data 형식 정의
@@ -163,7 +166,9 @@ public class realMain extends AppCompatActivity {
                                     }).show();
                         }
                         else{
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            ID=id;
+                            NAME=name;
+                            Intent i = new Intent(getApplicationContext(), ChatBoxActivity.class);
                             startActivity(i);
                         }
                     }
