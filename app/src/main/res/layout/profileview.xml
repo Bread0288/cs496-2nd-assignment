@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    a:layout_width="fill_parent"
+    a:layout_height="wrap_content"
+    a:layout_gravity="center_horizontal"
+    a:orientation="horizontal">
+
+    <TextView
+        a:id="@+id/name"
+        a:layout_width="300dp"
+        a:layout_height="match_parent"
+        a:layout_weight="1"
+        a:gravity="center_vertical"
+        a:paddingLeft="10dp"
+        a:text="TextView"
+        a:textSize="18sp" />
+
+    <LinearLayout
+        a:layout_width="match_parent"
+        a:layout_height="match_parent"
+        a:layout_weight="1"
+        a:orientation="horizontal">
+
+        <LinearLayout
+            a:layout_width="match_parent"
+            a:layout_height="match_parent"
+            a:layout_weight="1"
+            a:orientation="vertical">
+
+            <LinearLayout
+                a:id="@+id/phone_layout"
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:layout_weight="1"
+                a:minHeight="30dp"
+                a:orientation="horizontal">
+
+                <TextView
+                    a:id="@+id/phone_text"
+                    a:layout_width="100dp"
+                    a:layout_height="match_parent"
+                    a:layout_weight="1"
+                    a:gravity="center_vertical"
+                    a:text="@string/phone_text"
+                    a:textSize="14sp" />
+
+                <TextView
+                    a:id="@+id/phone"
+                    a:layout_width="match_parent"
+                    a:layout_height="match_parent"
+                    a:layout_weight="1"
+                    a:gravity="center_vertical"
+                    a:text="TextView" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                a:id="@+id/email_layout"
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:layout_weight="1"
+                a:minHeight="30dp"
+                a:orientation="horizontal">
+
+                <TextView
+                    a:id="@+id/email_text"
+                    a:layout_width="100dp"
+                    a:layout_height="match_parent"
+                    a:layout_weight="1"
+                    a:gravity="center_vertical"
+                    a:text="@string/email_text"
+                    a:textSize="14sp" />
+
+                <TextView
+                    a:id="@+id/email"
+                    a:layout_width="match_parent"
+                    a:layout_height="match_parent"
+                    a:layout_weight="1"
+                    a:gravity="center_vertical"
+                    a:text="TextView" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            a:id="@+id/deleteButton"
+            a:layout_width="40dp"
+            a:layout_height="match_parent"
+            a:layout_weight="1"
+            a:gravity="center"
+            a:text="@string/delete"
+            a:textSize="24sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
