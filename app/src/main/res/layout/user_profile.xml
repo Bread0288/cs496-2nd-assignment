@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/Name"
+        android:id="@+id/profilename"
         android:layout_width="183dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -16,7 +16,7 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/phone"
+        android:id="@+id/profilephone"
         android:layout_width="183dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"

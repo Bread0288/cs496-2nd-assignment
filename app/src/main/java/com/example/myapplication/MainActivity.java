@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -18,11 +20,14 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.myapplication.Retrofit.IMyService;
 import com.example.myapplication.Retrofit.RetrofitClient;
 import com.example.myapplication.chat.ChatBoxActivity;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -43,12 +48,18 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
-    public String ID;
-    public static String NAME="";
+    private AccessToken accessToken;
+    public static LoginManager loginManager;
+
+    public static String ID;
+    public static String NAME;
     public String PHONE;
+
     private final int MY_PERMISSIONS_REQUEST = 100;
     private boolean isPermissionGranted = false;
 
@@ -65,7 +76,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+        Intent reset = getIntent();
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        accessToken = AccessToken.getCurrentAccessToken();
+
         //activity main 레이아웃을 표시
 
         setContentView(R.layout.activity_facebook);
@@ -94,48 +110,65 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_facebook);
         }
 
+        accessToken = AccessToken.getCurrentAccessToken();
+
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+        if(isLoggedIn){
+            ID=getAppPreferences(this, "ID");
+            NAME=getAppPreferences(this, "NAME");
+            Intent i = new Intent(getApplicationContext(), ChatBoxActivity.class);
+            i.putExtra("id", ID);
+            i.putExtra("name", NAME);
+            startActivity(i);
+        }
 
         Retrofit retrofitClient = RetrofitClient.getInstance(); //data 보내기
 
         iMyService = retrofitClient.create(IMyService.class);
 
         //facebook 로그인
-        callbackManager = CallbackManager.Factory.create();
 
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        Button loginButton = (Button) findViewById(R.id.login_button);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            public void onClick(View v) {
+                loginManager = LoginManager.getInstance();
+                loginManager.logInWithReadPermissions(MainActivity.this, Arrays.asList("public_profile", "email"));
+                loginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.e("result",object.toString());
-                        try {
-                            loginUser(object.getString("id"), object.getString("name"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onSuccess(LoginResult loginResult) {
+                        GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.e("result",object.toString());
+                                try {
+                                    loginUser(object.getString("id"), object.getString("name"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        graphRequest.setParameters(parameters);
+                        graphRequest.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.e("onError", "onError " + error.getLocalizedMessage());
                     }
                 });
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
-                graphRequest.setParameters(parameters);
-                graphRequest.executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.e("LoginErr",error.toString());
             }
         });
-
 
     }
 
@@ -167,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String response) throws Exception {
-                        Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
                         //등록되지 않은 user이면 register 창 띄움
 
                         if(response.equals("\"등록된 사용자가 아닙니다.\"")) {
@@ -199,12 +232,24 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                             //서버에 보내기
                                             registerUser (edit_register_phonenumber.getText().toString(), id, name);
+
+                                            ID = id;
+                                            NAME = name;
+                                            setAppPreferences(MainActivity.this, "ID", id);
+                                            setAppPreferences(MainActivity.this, "NAME", NAME);
+                                            Intent i = new Intent(getApplicationContext(), ChatBoxActivity.class);
+                                            i.putExtra("id", ID);
+                                            i.putExtra("name", NAME);
+                                            startActivity(i);
+
                                         }
                                     }).show();
                         }
                         else{
-                            ID=id;
-                            NAME=name;
+                            ID = id;
+                            NAME = name;
+                            setAppPreferences(MainActivity.this, "ID", ID);
+                            setAppPreferences(MainActivity.this, "NAME", NAME);
                             Intent i = new Intent(getApplicationContext(), ChatBoxActivity.class);
                             i.putExtra("id", ID);
                             i.putExtra("name", NAME);
@@ -213,5 +258,31 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
     }
+
+    //로그인 유지를 위해 id와 name 정보 저장
+
+    private void setAppPreferences(Activity context, String key, String value)
+    {
+        SharedPreferences pref = null;
+        pref = context.getSharedPreferences("FacebookCon", 0);
+        SharedPreferences.Editor prefEditor = pref.edit();
+        prefEditor.putString(key, value);
+
+        prefEditor.commit();
+    }
+
+    private String getAppPreferences(Activity context, String key)
+    {
+        String returnValue = null;
+
+        SharedPreferences pref = null;
+        pref = context.getSharedPreferences("FacebookCon", 0);
+
+        returnValue = pref.getString(key, "");
+
+        return returnValue;
+    }
+
+
 
 }

@@ -110,6 +110,7 @@ public class ProfileListAdapter extends BaseAdapter {
         invite_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AlertDialog diaBox = AskOption(profile.getPhone(), profile.getName());
                 diaBox.show();
             }
