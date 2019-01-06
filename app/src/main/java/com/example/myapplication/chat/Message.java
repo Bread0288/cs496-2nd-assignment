@@ -1,24 +1,35 @@
 package com.example.myapplication.chat;
 
 public class Message {
-    private String nickname;
+    private String name;
     String message ;
+    String phonenumber;
 
     public  Message(){    }
 
-    public Message(String nickname, String message) {
-        this.nickname = nickname;
+    public Message(String name, String message, String phonenumber) {
+        this.name = name;
         this.message = message;
+        this.phonenumber = phonenumber;
     }
-        public String getNickname() {
-            return nickname;
+        public String getName() {
+            return name;
         }
-        public void setNickname(String nickname) {
-            this.nickname = nickname;
+        public void setname(String nickname) {
+            this.name = name;
         }
         public String getMessage() {
             return message;
         }
         public void setMessage(String message) {
-            this.message = message;    }
+            this.message = message;
+        }
+        public void setPhonenumber(String phonenumber){
+            this.phonenumber = phonenumber;
+
+        }
+        public String getPhonenumber() {
+            return phonenumber;
+
+        }
 }

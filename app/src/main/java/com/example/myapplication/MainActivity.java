@@ -47,11 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     public String ID;
-    public String NAME;
+    public static String NAME="";
     public String PHONE;
-    private Button btn;
-    private EditText nickname;
-    public static final String NICKNAME = "usernickname";
     private final int MY_PERMISSIONS_REQUEST = 100;
     private boolean isPermissionGranted = false;
 
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         //activity main 레이아웃을 표시
 
         setContentView(R.layout.activity_facebook);
-    // Permission request  WRITE_EXTERNAL_STORAGE
+    // Permission request
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
@@ -102,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         iMyService = retrofitClient.create(IMyService.class);
 
+        //facebook 로그인
         callbackManager = CallbackManager.Factory.create();
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -139,8 +137,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //Main 화면의 +버튼을 누를 시 새로운 채팅방을 만들기 위해 가지고 있는 전화번호부 목록으로 넘어가는 intent 설정
-
     }
 
     @Override
@@ -149,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    //계정생성
     private void registerUser(String phonenumber, String ID, String name) {
         compositeDisposable.add(iMyService.registerUser(phonenumber, ID, name)
                 .subscribeOn(Schedulers.io())
@@ -161,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 }));
     }
 
+    //로그인
     private void loginUser (final String id, final String name){
 
         compositeDisposable.add(iMyService.loginUser(id, name)

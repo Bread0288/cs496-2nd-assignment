@@ -34,7 +34,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
     private Socket socket;
 
-    public String Nickname ;
+    public String Name ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +52,11 @@ public class ChatBoxActivity extends AppCompatActivity {
 
         messagetxt = (EditText) findViewById(R.id.message) ;
         send = (Button)findViewById(R.id.send);        // get the nickame of the user
-        Nickname= (String)getIntent().getExtras().getString(MainActivity.NICKNAME);        //connect you socket client to the server
+        Name= (String)getIntent().getExtras().getString(MainActivity.NAME);        //connect you socket client to the server
         try {
             socket = IO.socket("http://socrip4.kaist.ac.kr:380/");
             socket.connect();
-            socket.emit("join", Nickname);
+            socket.emit("join", Name);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }       //setting up recyler
@@ -71,7 +71,7 @@ public class ChatBoxActivity extends AppCompatActivity {
         public void onClick(View v) {
             //retrieve the nickname and the message content and fire the event messagedetection
             if(!messagetxt.getText().toString().isEmpty()){
-                socket.emit("messagedetection",Nickname,messagetxt.getText().toString());
+                socket.emit("messagedetection",Name, messagetxt.getText().toString());
                 messagetxt.setText(" ");
             }
         }
@@ -83,7 +83,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         String data = (String) args[0];
-                        Toast.makeText(ChatBoxActivity.this,data,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatBoxActivity.this, data, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -95,7 +95,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         String data = (String) args[0];
-                        Toast.makeText(ChatBoxActivity.this,data,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatBoxActivity.this, data, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -110,10 +110,11 @@ public class ChatBoxActivity extends AppCompatActivity {
                         JSONObject data = (JSONObject) args[0];
                         try {
                             //extract data from fired event
-                            String nickname = data.getString("senderNickname");
+                            String name = data.getString("senderName");
                             String message = data.getString("message");
+                            String phonenumber = data.getString("phonenumber");
                             // make instance of message
-                            Message m = new Message(nickname,message);
+                            Message m = new Message(name, message, phonenumber);
                             // add the message to the messageList
                             MessageList.add(m);
                             // add the new updated list to the adapter
@@ -130,7 +131,9 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        socket.disconnect();  }}
+        socket.disconnect();  }
+}

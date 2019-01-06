@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -116,22 +117,29 @@ public class ProfileListAdapter extends BaseAdapter {
 
         return convertView;
     }
-    private AlertDialog AskOption(final String phone, String name)
-    {
+    private AlertDialog AskOption(final String phone, String name) {
+        final SmsManager sms = SmsManager.getDefault();
         Log.e("SMS",phone);
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(_context)
                 //set message, title, and icon
                 .setTitle("Invite")
-                .setMessage("CHATAPP으로 "+name+"님을 초대하시겠습니까? 확인을 누르시면 초대 메세지가 발송됩니다.")
+                .setMessage("CHATAPP으로 "+name+"님을 초대하시겠습니까? 확인을 누르시면 메세지 앱으로 이동합니다.")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
+
+                        String smsNumber = phone;
+                        String smsText = "CHATAPP을 설치하고 친구와 채팅을 즐기세요!\n https://github.com/Bread0288/cs496-2nd-assignment";
+
+                        Uri uri = Uri.parse("smsto:" + smsNumber);
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                        intent.putExtra("sms_body", smsText);
+                        _context.startActivity(intent);
+
                         Log.e("SMS",phone);
-                        SmsManager sms = SmsManager.getDefault();
-                        sms.sendTextMessage
-                                (phone, null, "CHATAPP을 설치하고 친구와 채팅을 즐기세요!\n https://github.com/Bread0288/cs496-2nd-assignment", null, null);
+                        //sms.sendTextMessage("01044685779", null, "CHATAPP을 설치하고 친구와 채팅을 즐기세요!\n https://github.com/Bread0288/cs496-2nd-assignment", null, null);
                         Log.e("SMS",phone);
-                        dialog.dismiss();
+                        //dialog.dismiss();
                     }
 
                 })
