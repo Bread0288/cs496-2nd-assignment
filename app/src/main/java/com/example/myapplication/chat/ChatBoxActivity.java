@@ -86,8 +86,9 @@ public class ChatBoxActivity extends AppCompatActivity {
                                 String name = data.getString("senderName");
                                 String message = data.getString("message");
                                 String phonenumber = data.getString("phonenumber");
+                                //String encodedImage = data.getString("image");
                                 // make instance of message
-                                Message m = new Message(name, message, phonenumber);
+                                Message m = new Message(name, message, phonenumber/*, encodedImage*/);
                                 // add the message to the messageList
                                 MessageList.add(m);
                                 // add the new updated list to the adapter
@@ -124,7 +125,7 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
         });
 
-        /*socket.on("message", new Emitter.Listener() {
+        socket.on("message", new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
                 runOnUiThread(new Runnable() {
@@ -137,11 +138,9 @@ public class ChatBoxActivity extends AppCompatActivity {
                             String name = data.getString("senderName");
                             String message = data.getString("message");
                             String phonenumber = data.getString("phonenumber");
-                            String encodedImage = data.getString("image");
-                            byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                            Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            //String encodedImage = data.getString("image");
                             // make instance of message
-                            Message m = new Message(name, message, phonenumber, decodedImage);
+                            Message m = new Message(name, message, phonenumber/*, encodedImage*/);
                             // make instance of message
                             // add the message to the messageList
                             MessageList.add(m);
@@ -157,7 +156,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                     }
                 });
             }
-        });*/
+        });
 
         socket.on("userjoinedthechat", new Emitter.Listener() {
             @Override

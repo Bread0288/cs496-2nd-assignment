@@ -6,16 +6,16 @@ public class Message {
     private String name;
     String message ;
     String phonenumber;
-    Bitmap image;
+    String image;
 
     public  Message(){    }
 
 
-    public Message(String name, String message, String phonenumber/*, Bitmap image*/) {
+    public Message(String name, String message, String phonenumber/*, String image*/) {
         this.name = name;
         this.message = message;
         this.phonenumber = phonenumber;
-        //this.image = image;
+        this.image = image;
     }
         public String getName() {
             return name;
@@ -37,11 +37,11 @@ public class Message {
             return phonenumber;
 
         }
-        public Bitmap getImage() {
+        public String getImage() {
             return image;
         }
 
-        public void setImage(Bitmap image) {
+        public void setImage(String image) {
             this.image = image;
         }
 

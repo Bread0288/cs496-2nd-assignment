@@ -1,15 +1,15 @@
 package com.example.myapplication.chat;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +23,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.rengwuxian.materialedittext.MaterialEditText;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +33,23 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
 
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView username;
-        public TextView message;
-        public ImageView image;
+        public TextView lusername;
+        public TextView lmessage;
+        public ImageView limage;
+        public TextView rusername;
+        public TextView rmessage;
+        public ImageView rimage;
         public TextView ProfileName;
         public TextView ProfilePhone;
 
         public MyViewHolder(View view) {
             super(view);
-            username = (TextView) view.findViewById(R.id.name);
-            message = (TextView) view.findViewById(R.id.message);
-            //image = (ImageView) view.findViewById(R.id.uploadedimage);
+            lusername = (TextView) view.findViewById(R.id.lname);
+            lmessage = (TextView) view.findViewById(R.id.lmessage);
+            limage = (ImageView) view.findViewById(R.id.luploadedimage);
+            rusername = (TextView) view.findViewById(R.id.rname);
+            rmessage = (TextView) view.findViewById(R.id.rmessage);
+            rimage = (ImageView) view.findViewById(R.id.ruploadedimage);
         }
     }
 
@@ -60,21 +63,65 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
     @Override
     public ChatBoxAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item, parent, false);
+                .inflate(R.layout.chat_item, parent, false);
         return new ChatBoxAdapter.MyViewHolder(itemView);
     }
         //메세지 클릭하면 user 프로필 띄우기
         @Override
         public void onBindViewHolder(final ChatBoxAdapter.MyViewHolder holder, final int position) {
             final Message m = MessageList.get(position);
-            holder.username.setText(m.getName());
-            Log.e("name",m.getName());
-            holder.message.setText(m.getMessage() );
-            //holder.image.setImageBitmap(m.getImage());
-            holder.username.setOnClickListener(new View.OnClickListener() {
+            Bitmap decodedImage = null;
+            TextView username;
+            TextView message;
+            ImageView image;
+
+            if(m.getName().equals(MainActivity.NAME)){
+                Log.e("right",MainActivity.NAME + m.getName());
+                holder.limage.setVisibility(View.INVISIBLE);
+                holder.lusername.setVisibility(View.INVISIBLE);
+                holder.lmessage.setVisibility(View.INVISIBLE);
+                holder.limage.setScaleY(0);
+                holder.lusername.setScaleY(0);
+                holder.lmessage.setScaleY(0);
+                holder.lusername.setVisibility(View.INVISIBLE);
+                holder.lmessage.setVisibility(View.INVISIBLE);
+                holder.rimage.setVisibility(View.VISIBLE);
+                holder.rusername.setVisibility(View.VISIBLE);
+                holder.rmessage.setVisibility(View.VISIBLE);
+                username = holder.rusername;
+                message = holder.rmessage;
+                image = holder.rimage;
+            }
+            else{
+                Log.e("left",MainActivity.NAME + m.getName());
+                holder.limage.setVisibility(View.VISIBLE);
+                holder.lusername.setVisibility(View.VISIBLE);
+                holder.lmessage.setVisibility(View.VISIBLE);
+                holder.rimage.setVisibility(View.INVISIBLE);
+                holder.rusername.setVisibility(View.INVISIBLE);
+                holder.rmessage.setVisibility(View.INVISIBLE);
+                username = holder.lusername;
+                message = holder.lmessage;
+                image = holder.limage;
+            }
+
+            username.setText(m.getName());
+            if(m.getImage()==null){
+                message.setText(m.getMessage() );
+                message.setVisibility(View.VISIBLE);
+                image.setVisibility(View.INVISIBLE);
+            }
+            else {
+                byte[] decodedString = Base64.decode(m.getImage(), Base64.DEFAULT);
+                decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                image.setImageBitmap(decodedImage);
+                message.setVisibility(View.INVISIBLE);
+                image.setVisibility(View.VISIBLE);
+            }
+
+            username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     final View user_profile = LayoutInflater.from(_context)
                             .inflate(R.layout.user_profile, null);
                     holder.ProfileName = user_profile.findViewById(R.id.profilename);
