@@ -15,6 +15,13 @@
     <TextView
         android:id="@id/message"
         android:textSize="20dp"
-        android:text=" message "
+        android:text=" null "
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" /></LinearLayout>
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/uploadedimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

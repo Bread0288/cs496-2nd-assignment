@@ -1,16 +1,21 @@
 package com.example.myapplication.chat;
 
+import android.graphics.Bitmap;
+
 public class Message {
     private String name;
     String message ;
     String phonenumber;
+    Bitmap image;
 
     public  Message(){    }
 
-    public Message(String name, String message, String phonenumber) {
+
+    public Message(String name, String message, String phonenumber/*, Bitmap image*/) {
         this.name = name;
         this.message = message;
         this.phonenumber = phonenumber;
+        //this.image = image;
     }
         public String getName() {
             return name;
@@ -32,4 +37,12 @@ public class Message {
             return phonenumber;
 
         }
+        public Bitmap getImage() {
+            return image;
+        }
+
+        public void setImage(Bitmap image) {
+            this.image = image;
+        }
+
 }

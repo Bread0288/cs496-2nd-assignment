@@ -38,6 +38,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
     public  class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView username;
         public TextView message;
+        public ImageView image;
         public TextView ProfileName;
         public TextView ProfilePhone;
 
@@ -45,6 +46,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
             super(view);
             username = (TextView) view.findViewById(R.id.name);
             message = (TextView) view.findViewById(R.id.message);
+            //image = (ImageView) view.findViewById(R.id.uploadedimage);
         }
     }
 
@@ -68,6 +70,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
             holder.username.setText(m.getName());
             Log.e("name",m.getName());
             holder.message.setText(m.getMessage() );
+            //holder.image.setImageBitmap(m.getImage());
             holder.username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
