@@ -1,6 +1,7 @@
 package com.example.myapplication.chat;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,9 +15,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.myapplication.ContactsActivity;
@@ -52,11 +55,14 @@ public class ChatBoxActivity extends AppCompatActivity {
     private Uri filePath;
     private Bitmap bitmap;
 
+
+
     String selectedPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //implementing socket listeners
         try {
@@ -79,7 +85,6 @@ public class ChatBoxActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Log.e("load","실행됨");
-
                             JSONObject data = (JSONObject) args[0];
                             try {
                                 //extract data from fired event
@@ -87,16 +92,25 @@ public class ChatBoxActivity extends AppCompatActivity {
                                 String message = data.getString("message");
                                 String phonenumber = data.getString("phonenumber");
                                 String encodedImage = data.getString("image");
+                                Message m;
                                 // make instance of message
-                                Message m = new Message(name, message, phonenumber, encodedImage);
+                                if (name.equals(MainActivity.NAME)){
+                                    m = new Message(name, message, phonenumber, encodedImage);
+                                }
+                                else{
+                                    m = new Message(name, message, phonenumber, encodedImage);
+                                }
+                                // make instance of message
                                 // add the message to the messageList
                                 MessageList.add(m);
                                 // add the new updated list to the adapter
                                 chatBoxAdapter = new ChatBoxAdapter(ChatBoxActivity.this, MessageList);
                                 // notify the adapter to update the recycler view
                                 chatBoxAdapter.notifyDataSetChanged();
+
                                 //set the adapter for the recycler view
                                 myRecylerView.setAdapter(chatBoxAdapter);
+                                myRecylerView.smoothScrollToPosition(myRecylerView.getAdapter().getItemCount());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -139,8 +153,11 @@ public class ChatBoxActivity extends AppCompatActivity {
                             String message = data.getString("message");
                             String phonenumber = data.getString("phonenumber");
                             String encodedImage = data.getString("image");
+                            Message m;
                             // make instance of message
-                            Message m = new Message(name, message, phonenumber, encodedImage);
+                            if (name.equals(MainActivity.NAME)){
+                            m = new Message(name, message, phonenumber, encodedImage);}
+                            else{m = new Message(name, message, phonenumber, encodedImage);}
                             // make instance of message
                             // add the message to the messageList
                             MessageList.add(m);
@@ -150,6 +167,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                             chatBoxAdapter.notifyDataSetChanged();
                             //set the adapter for the recycler view
                             myRecylerView.setAdapter(chatBoxAdapter);
+                            myRecylerView.smoothScrollToPosition(myRecylerView.getAdapter().getItemCount());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -214,8 +232,8 @@ public class ChatBoxActivity extends AppCompatActivity {
         });
 
         messagetxt = (EditText) findViewById(R.id.message) ;
-        send = (Button)findViewById(R.id.send);        // get the nickame of the user
 
+        send = (Button)findViewById(R.id.send);        // get the nickame of the user
 
         MessageList = new ArrayList<>();
         myRecylerView = (RecyclerView) findViewById(R.id.messagelist);
@@ -230,7 +248,7 @@ public class ChatBoxActivity extends AppCompatActivity {
         public void onClick(View v) {
             //retrieve the nickname and the message content and fire the event messagedetection
             if(!messagetxt.getText().toString().isEmpty()){
-                socket.emit("messagedetection", Name, messagetxt.getText().toString(), ID);
+                socket.emit("messagedetection", Name, messagetxt.getText().toString(), null, ID);
                 messagetxt.setText(" ");
             }
         }

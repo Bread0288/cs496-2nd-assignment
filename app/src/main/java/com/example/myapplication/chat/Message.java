@@ -2,6 +2,8 @@ package com.example.myapplication.chat;
 
 import android.graphics.Bitmap;
 
+import com.example.myapplication.MainActivity;
+
 public class Message {
     private String name;
     String message ;
@@ -11,16 +13,19 @@ public class Message {
     public  Message(){    }
 
 
+
+
     public Message(String name, String message, String phonenumber, String image) {
         this.name = name;
         this.message = message;
         this.phonenumber = phonenumber;
         this.image = image;
+
     }
         public String getName() {
             return name;
         }
-        public void setname(String nickname) {
+        public void setName(String nickname) {
             this.name = name;
         }
         public String getMessage() {
