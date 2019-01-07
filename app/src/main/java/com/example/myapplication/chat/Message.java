@@ -11,7 +11,7 @@ public class Message {
     public  Message(){    }
 
 
-    public Message(String name, String message, String phonenumber/*, String image*/) {
+    public Message(String name, String message, String phonenumber, String image) {
         this.name = name;
         this.message = message;
         this.phonenumber = phonenumber;
