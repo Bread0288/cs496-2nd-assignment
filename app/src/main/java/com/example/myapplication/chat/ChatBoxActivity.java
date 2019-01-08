@@ -257,7 +257,7 @@ public class ChatBoxActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_IMG_FILE && data.getData() !=null){
+        if(requestCode == REQ_IMG_FILE && data != null){
             filePath = data.getData();
             try {
                 InputStream imageStream = getContentResolver().openInputStream(filePath);
