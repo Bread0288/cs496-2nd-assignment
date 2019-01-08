@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class ContactsActivity extends AppCompatActivity implements ProfileListAdapter.EventListener{
+public class ContactsActivity extends FontActivity implements ProfileListAdapter.EventListener{
     public ArrayList<Profile> _profiles_data;
     public ArrayList<Profile> _profiles_show;
     private ProfileListAdapter adapter;

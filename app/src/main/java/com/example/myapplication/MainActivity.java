@@ -51,7 +51,7 @@ import retrofit2.Retrofit;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FontActivity {
 
     private CallbackManager callbackManager;
     private AccessToken accessToken;

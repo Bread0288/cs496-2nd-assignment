@@ -86,6 +86,7 @@
             android:layout_width="280dp"
             android:layout_height="match_parent"
             android:hint="메세지를 입력하세요"
+            android:textSize="17dp"
             android:layout_weight="28"/>
 
         <ImageButton

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.myapplication.ContactsActivity;
+import com.example.myapplication.FontActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.github.nkzawa.socketio.client.IO;
@@ -43,7 +44,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatBoxActivity extends AppCompatActivity  {
+public class ChatBoxActivity extends FontActivity {
     public RecyclerView myRecylerView ;
     public List<Message> MessageList ;
     public ChatBoxAdapter chatBoxAdapter;
