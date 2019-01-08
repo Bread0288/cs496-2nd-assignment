@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ public class ChatBoxActivity extends AppCompatActivity {
     public List<Message> MessageList ;
     public ChatBoxAdapter chatBoxAdapter;
     public  EditText messagetxt ;
-    public  Button send ;    //declare socket object
+    public  ImageButton send ;    //declare socket object
     public String Name ;
     public String ID ;
     private Socket socket;
@@ -196,7 +197,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_chat_box);
 
-        Button logout = findViewById(R.id.logout);
+        ImageButton logout = findViewById(R.id.logout);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +209,7 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
         });
 
-        Button fab = findViewById(R.id.chatplus_button);
+        ImageButton fab = findViewById(R.id.chatplus_button);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +219,7 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
         });
 
-        Button upload = findViewById(R.id.upload_image);
+        ImageButton upload = findViewById(R.id.upload_image);
 
         upload.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -233,7 +234,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
         messagetxt = (EditText) findViewById(R.id.message) ;
 
-        send = (Button)findViewById(R.id.send);        // get the nickame of the user
+        send = (ImageButton)findViewById(R.id.send);        // get the nickame of the user
 
         MessageList = new ArrayList<>();
         myRecylerView = (RecyclerView) findViewById(R.id.messagelist);

@@ -35,6 +35,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         //facebook 로그인
 
-        Button loginButton = (Button) findViewById(R.id.login_button);
+        ImageButton loginButton = (ImageButton) findViewById(R.id.login_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

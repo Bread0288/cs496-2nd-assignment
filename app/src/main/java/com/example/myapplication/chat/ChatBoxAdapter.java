@@ -94,6 +94,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
             if(m.getImage()=="null"){
                 holder.message.setText(m.getMessage() );
                 holder.message.setVisibility(View.VISIBLE);
+                holder.image.setImageBitmap(null);
             }
             else {
                 byte[] decodedString = Base64.decode(m.getImage(), Base64.DEFAULT);
@@ -104,11 +105,9 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
                 holder.image.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-
-
                     }
                 });
-            }
+                }
                 holder.username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

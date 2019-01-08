@@ -7,68 +7,101 @@
     android:layout_height="match_parent"
     tools:context="com.example.myapplication.chat.ChatBoxActivity">
 
-    <LinearLayout
-        android:id="@+id/listview"
+    <RelativeLayout
+        android:id="@+id/exit"
+        android:background="#FCC856"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
+        android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical"
-        android:weightSum="3">
+        android:layout_marginTop="0dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/messagelist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            />
+        <ImageButton
+            android:id="@+id/chatplus_button"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:adjustViewBounds="true"
+            android:background="#FCC856"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_person_add" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4.4">
+        <ImageButton
+            android:id="@+id/logout"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:adjustViewBounds="true"
+            android:padding="3dp"
+            android:background="#FCC856"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_exit" />
 
-            <Button
-                android:id="@+id/chatplus_button"
-                android:layout_width="6dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:background="@drawable/ic_person_add" />
+    </RelativeLayout>
 
-            <Button
-                android:id="@+id/upload_image"
-                android:layout_width="6dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:background="@drawable/ic_upload" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal"
+        android:background="#FCC856"
+        android:id="@+id/input"
+        android:weightSum="40"
+ >
 
-            <Button
-                android:id="@+id/logout"
-                android:layout_width="6dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:text="로그아웃" />
+        <ImageButton
+            android:id="@+id/upload_image"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="#FCC856"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_upload"
+            android:layout_weight="6"/>
 
-            <EditText
-                android:id="@+id/message"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:hint=" your message" />
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:hint="메세지를 입력하세요"
+            android:layout_weight="28"/>
 
-            <Button
-                android:id="@+id/send"
-                android:layout_width="12dp"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:layout_weight="1"
-                android:text="send" />
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="#FCC856"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_send"
+            android:layout_weight="6"
+             />
 
-        </LinearLayout>
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messagelist"
+        android:background="#FCE9A9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/input"
+        android:layout_below="@+id/exit"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="3"
+        android:clipToPadding="false"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>
