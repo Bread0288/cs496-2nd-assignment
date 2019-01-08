@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <protected-broadcast android:name="android.intent.action.MEDIA_MOUNTED" />
 
 
 
@@ -42,6 +43,7 @@
         </activity>
         <activity android:name=".ContactsActivity"/>
         <activity android:name=".chat.ChatBoxActivity"/>
+        <activity android:name=".chat.PhotoActivity"/>
     </application>
 
 </manifest>
