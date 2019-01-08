@@ -1,5 +1,6 @@
 package com.example.myapplication.chat;
 
+import android.app.AlertDialog;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AlertDialogLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
@@ -28,6 +30,8 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.AlertDialog.THEME_DEVICE_DEFAULT_LIGHT;
 
 public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHolder> {
     private List<Message> MessageList;

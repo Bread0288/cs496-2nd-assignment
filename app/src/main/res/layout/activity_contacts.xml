@@ -33,15 +33,15 @@
             >
 
             <EditText
+                app:theme="@style/EditTextStyle"
+                style="@style/EditTextStyle"
                 android:id="@+id/numlistSearch"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:hint="@string/search_hint"
                 android:inputType="text"
                 android:paddingLeft="10dp"
-                android:background="#FCE9A9"
-                android:outlineAmbientShadowColor="#FCC856"
-                android:outlineSpotShadowColor="#FCC856"/>
+/>
 
             <ListView
                 android:id="@+id/numberlist"

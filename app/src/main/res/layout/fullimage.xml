@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FCE9A9">
 
     <ImageView
         android:id="@+id/fullScreenImageView"
@@ -26,6 +27,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/plus_btn"
-        app:backgroundTint="@drawable/messenger_button_blue_bg_selector" />
+        android:src="@drawable/ic_save"
+        app:backgroundTint="@color/colorAccent" />
 </RelativeLayout>

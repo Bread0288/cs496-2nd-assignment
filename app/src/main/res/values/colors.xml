@@ -3,5 +3,5 @@
     <color name="colorPrimary">#FCC856</color>
     <color name="colorPrimaryDark">#FCC856</color>
     <color name="colorAccent">#FCC856</color>
-    <color name="myTextColor">#AFAFAF</color>
+    <color name="myTextColor">#000000</color>
 </resources>

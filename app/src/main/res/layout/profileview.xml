@@ -10,7 +10,7 @@
 
     <TextView
         a:id="@+id/name"
-        a:layout_width="250dp"
+        a:layout_width="150dp"
         a:layout_height="match_parent"
         a:layout_weight="1"
         a:gravity="center_vertical"
@@ -19,7 +19,7 @@
         a:textSize="18sp" />
 
     <LinearLayout
-        a:layout_width="300dp"
+        a:layout_width="200dp"
         a:layout_height="match_parent"
         a:orientation="horizontal"
         a:minHeight="60dp"
