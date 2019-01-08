@@ -42,7 +42,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatBoxActivity extends AppCompatActivity {
+public class ChatBoxActivity extends AppCompatActivity  {
     public RecyclerView myRecylerView ;
     public List<Message> MessageList ;
     public ChatBoxAdapter chatBoxAdapter;
@@ -163,7 +163,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                             // add the message to the messageList
                             MessageList.add(m);
                             // add the new updated list to the adapter
-                            chatBoxAdapter = new ChatBoxAdapter(ChatBoxActivity.this, MessageList );
+                            chatBoxAdapter = new ChatBoxAdapter(ChatBoxActivity.this, MessageList);
                             // notify the adapter to update the recycler view
                             chatBoxAdapter.notifyDataSetChanged();
                             //set the adapter for the recycler view
@@ -192,8 +192,6 @@ public class ChatBoxActivity extends AppCompatActivity {
                 });
             }
         });
-
-
 
         setContentView(R.layout.activity_chat_box);
 
@@ -242,7 +240,6 @@ public class ChatBoxActivity extends AppCompatActivity {
         myRecylerView.setLayoutManager(mLayoutManager);
         myRecylerView.setItemAnimator(new DefaultItemAnimator());
 
-
         //message send action
         send.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -280,6 +277,9 @@ public class ChatBoxActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        socket.disconnect();  }
+        socket.disconnect();
+    }
+
+
 
 }

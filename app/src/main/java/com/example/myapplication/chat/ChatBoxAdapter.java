@@ -31,10 +31,12 @@ import java.util.List;
 public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHolder> {
     private List<Message> MessageList;
     private Context _context;
+
+    static Bitmap decodedImage_final;
     View itemView;
 
 
-    public  class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView username;
         public TextView message;
@@ -47,7 +49,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
             super(view);
             username = itemView.findViewById(R.id.name);
             message = itemView.findViewById(R.id.message);
-            image = itemView.findViewById(R.id.uploadedimage);;
+            image = itemView.findViewById(R.id.uploadedimage);
         }
     }
 
@@ -75,7 +77,6 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
     }
         //메세지 클릭하면 user 프로필 띄우기
 
-
     @Override
     public int getItemViewType(int position) {
         if(MainActivity.NAME.equals(MessageList.get(position).getName())){
@@ -97,14 +98,21 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
                 holder.image.setImageBitmap(null);
             }
             else {
-                byte[] decodedString = Base64.decode(m.getImage(), Base64.DEFAULT);
+                Log.e("Picture Click", m.getImage());
+                final byte[] decodedString = Base64.decode(m.getImage(), Base64.DEFAULT);
                 decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                decodedImage = resizeBitmap(decodedImage);
-                holder.image.setImageBitmap(decodedImage);
+                Bitmap decodedImage_final = resizeBitmap(decodedImage);
+                holder.image.setImageBitmap(decodedImage_final);
                 holder.message.setVisibility(View.INVISIBLE);
-                holder.image.setOnClickListener(new View.OnClickListener(){
+
+                holder.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent pictureIntent = new Intent(_context, PhotoActivity.class);
+                        Log.e("Click1", "Make Intent");
+                        //pictureIntent.putExtra("picture", decodedString);
+                        //Log.e("Click2", "Put Extra");
+                        _context.startActivity(pictureIntent);
                     }
                 });
                 }
@@ -196,4 +204,29 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
         return result;
     }
 
+    public Bitmap readImageWithSampling(String imagePath, int targetWidth, int targetHeight) {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imagePath, bmOptions);
+
+        int photoWidth  = bmOptions.outWidth;
+        int photoHeight = bmOptions.outHeight;
+
+        if (targetHeight <= 0) {
+            targetHeight = (targetWidth * photoHeight) / photoWidth;
+        }
+
+        // Determine how much to scale down the image
+        int scaleFactor = 1;
+        if (photoWidth > targetWidth) {
+            scaleFactor = Math.min(photoWidth / targetWidth, photoHeight / targetHeight);
+        }
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+
+        return BitmapFactory.decodeFile(imagePath, bmOptions);
+    }
 }
