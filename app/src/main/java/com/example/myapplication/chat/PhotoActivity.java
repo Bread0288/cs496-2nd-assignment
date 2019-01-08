@@ -34,7 +34,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.example.myapplication.chat.ChatBoxAdapter.decodedImage_final;
+import static com.example.myapplication.chat.ChatBoxAdapter.decodedImage;
 
 public class PhotoActivity extends AppCompatActivity {
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMdd hh:mm:ss");
@@ -45,7 +45,7 @@ public class PhotoActivity extends AppCompatActivity {
         setContentView(R.layout.fullimage);
         getIntent();
         ImageView imageview = findViewById(R.id.fullScreenImageView);
-        imageview.setImageBitmap(decodedImage_final);
+        imageview.setImageBitmap(decodedImage);
 
         //사진을 핸드폰에 저장하기 기능
         findViewById(R.id.fab_photoDownload).setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class PhotoActivity extends AppCompatActivity {
                     }
                     FileOutputStream out = new FileOutputStream(string_path+file_name);
                     Log.e("File_Path", string_path+file_name);
-                    decodedImage_final.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    decodedImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
                     out.close();
                 }catch(FileNotFoundException exception){
                     Log.e("FileNotFoundException", exception.getMessage());
@@ -169,16 +169,4 @@ public class PhotoActivity extends AppCompatActivity {
 
     };
 
-    static public Bitmap resizeBitmap(Bitmap original) {
-
-        int resizeWidth = 400;
-
-        double aspectRatio = (double) original.getHeight() / (double) original.getWidth();
-        int targetHeight = (int) (resizeWidth * aspectRatio);
-        Bitmap result = Bitmap.createScaledBitmap(original, resizeWidth, targetHeight, false);
-        if (result != original) {
-            original.recycle();
-        }
-        return result;
-    }
 }

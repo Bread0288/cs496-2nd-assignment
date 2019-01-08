@@ -33,7 +33,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
     private List<Message> MessageList;
     private Context _context;
 
-    static Bitmap decodedImage_final;
+    static Bitmap decodedImage;
     View itemView;
 
 
@@ -91,7 +91,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final ChatBoxAdapter.MyViewHolder holder, final int position) {
         final Message m = MessageList.get(position);
-        Bitmap decodedImage = null;
+        decodedImage = null;
             holder.username.setText(m.getName());
             if(m.getImage()=="null"){
                 holder.message.setText(m.getMessage() );
@@ -105,10 +105,11 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
                 Bitmap decodedImage_final = resizeBitmap(decodedImage);
                 holder.image.setImageBitmap(decodedImage_final);
                 holder.message.setVisibility(View.INVISIBLE);
-
                 holder.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final byte[] decodedString = Base64.decode(m.getImage(), Base64.DEFAULT);
+                        decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         Intent pictureIntent = new Intent(_context, PhotoActivity.class);
                         Log.e("Click1", "Make Intent");
                         //pictureIntent.putExtra("picture", decodedString);
@@ -194,7 +195,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
 
     static public Bitmap resizeBitmap(Bitmap original) {
 
-        int resizeWidth = 400;
+        int resizeWidth = 600;
 
         double aspectRatio = (double) original.getHeight() / (double) original.getWidth();
         int targetHeight = (int) (resizeWidth * aspectRatio);
