@@ -4,11 +4,13 @@
     a:layout_width="fill_parent"
     a:layout_height="wrap_content"
     a:layout_gravity="center_horizontal"
-    a:orientation="horizontal">
+    a:minHeight="60dp"
+    a:orientation="horizontal"
+    a:weightSum="3">
 
     <TextView
         a:id="@+id/name"
-        a:layout_width="300dp"
+        a:layout_width="250dp"
         a:layout_height="match_parent"
         a:layout_weight="1"
         a:gravity="center_vertical"
@@ -17,17 +19,17 @@
         a:textSize="18sp" />
 
     <LinearLayout
-        a:layout_width="match_parent"
+        a:layout_width="300dp"
         a:layout_height="match_parent"
-        a:layout_weight="1"
-        a:weightSum="8"
-        a:orientation="horizontal">
+        a:orientation="horizontal"
+        a:minHeight="60dp"
+        a:layout_weight="1">
 
         <LinearLayout
             a:layout_width="match_parent"
-            a:layout_height="match_parent"
-            a:layout_weight="7"
-            a:orientation="vertical">
+            a:layout_height="wrap_content"
+            a:orientation="vertical"
+            a:layout_weight="1">
 
             <LinearLayout
                 a:id="@+id/phone_layout"
@@ -84,16 +86,16 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            a:id="@+id/inviteButton"
-            a:layout_width="40dp"
-            a:layout_height="match_parent"
-            a:layout_weight="1"
-            a:drawableLeft="@drawable/ic_plus"
-            a:drawablePadding="0dp"
-            a:gravity="center"
-            a:textSize="24sp" />
-
     </LinearLayout>
+
+    <ImageView
+        a:id="@+id/inviteButton"
+        a:layout_width="40dp"
+        a:layout_height="match_parent"
+        a:layout_weight="1"
+        a:gravity="center"
+        a:paddingRight="5dp"
+        a:src="@drawable/invitation"
+ />
 
 </LinearLayout>

@@ -9,22 +9,23 @@
 
     <RelativeLayout
         android:id="@+id/exit"
-        android:background="#FCC856"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="0dp"
+        android:background="#FCC856">
 
         <ImageButton
             android:id="@+id/chatplus_button"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
             android:adjustViewBounds="true"
             android:background="#FCC856"
-            android:padding="3dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_person_add" />
 
@@ -32,17 +33,29 @@
             android:id="@+id/logout"
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:layout_alignEnd="@+id/imageView"
+            android:layout_alignRight="@+id/imageView"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="5dp"
             android:adjustViewBounds="true"
-            android:padding="3dp"
             android:background="#FCC856"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_exit" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/chatplus_button"
+            android:layout_alignLeft="@+id/chatplus_button"
+            android:layout_alignBottom="@+id/exit"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="0dp"
+            android:padding="7dp"
+            app:srcCompat="@drawable/chat_title_cheese" />
 
     </RelativeLayout>
 
@@ -63,7 +76,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:background="#FCC856"
-            android:padding="3dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_upload"
             android:layout_weight="6"/>
@@ -81,9 +94,9 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:background="#FCC856"
-            android:padding="3dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_send"
+            android:src="@drawable/cheese"
             android:layout_weight="6"
              />
 
@@ -103,5 +116,17 @@
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="226dp"
+        android:layout_height="212dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="false" />
 
 </RelativeLayout>

@@ -76,6 +76,12 @@ public class PhotoActivity extends AppCompatActivity {
                 }catch(IOException exception){
                     Log.e("IOException", exception.getMessage());
                 }
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                File f = new File(string_path+file_name);
+                Uri contentUri = Uri.fromFile(f);
+                mediaScanIntent.setData(contentUri);
+                sendBroadcast(mediaScanIntent);
+                Toast.makeText(PhotoActivity.this, "사진이 저장되었습니다.", Toast.LENGTH_LONG).show();
 
 
                 /*

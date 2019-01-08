@@ -206,29 +206,4 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
         return result;
     }
 
-    public Bitmap readImageWithSampling(String imagePath, int targetWidth, int targetHeight) {
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imagePath, bmOptions);
-
-        int photoWidth  = bmOptions.outWidth;
-        int photoHeight = bmOptions.outHeight;
-
-        if (targetHeight <= 0) {
-            targetHeight = (targetWidth * photoHeight) / photoWidth;
-        }
-
-        // Determine how much to scale down the image
-        int scaleFactor = 1;
-        if (photoWidth > targetWidth) {
-            scaleFactor = Math.min(photoWidth / targetWidth, photoHeight / targetHeight);
-        }
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-
-        return BitmapFactory.decodeFile(imagePath, bmOptions);
-    }
 }

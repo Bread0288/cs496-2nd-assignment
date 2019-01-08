@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.myapplication.ContactsActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
@@ -46,11 +47,12 @@ public class ChatBoxActivity extends AppCompatActivity  {
     public RecyclerView myRecylerView ;
     public List<Message> MessageList ;
     public ChatBoxAdapter chatBoxAdapter;
-    public  EditText messagetxt ;
-    public  ImageButton send ;    //declare socket object
+    public EditText messagetxt ;
+    public ImageButton send ;    //declare socket object
     public String Name ;
     public String ID ;
     private Socket socket;
+    public LottieAnimationView loading;
 
     private static final int REQ_IMG_FILE = 1;
     private Uri filePath;
@@ -78,7 +80,6 @@ public class ChatBoxActivity extends AppCompatActivity  {
             socket.connect();
             socket.emit("join", Name);
             Log.e("join","방출됨");
-
             socket.on("load", new Emitter.Listener() {
                 @Override
                 public void call(final Object... args) {
@@ -108,17 +109,20 @@ public class ChatBoxActivity extends AppCompatActivity  {
                                 chatBoxAdapter = new ChatBoxAdapter(ChatBoxActivity.this, MessageList);
                                 // notify the adapter to update the recycler view
                                 chatBoxAdapter.notifyDataSetChanged();
-
                                 //set the adapter for the recycler view
                                 myRecylerView.setAdapter(chatBoxAdapter);
-                                myRecylerView.smoothScrollToPosition(myRecylerView.getAdapter().getItemCount());
+                                myRecylerView.scrollToPosition(myRecylerView.getAdapter().getItemCount()-1);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                         }
                     });
                 }
             });
+
+
 
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -137,6 +141,20 @@ public class ChatBoxActivity extends AppCompatActivity  {
 
                 });
 
+            }
+        });
+        socket.on("loading_start", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("start","");
+                        loading.setVisibility(View.VISIBLE);
+                        loading.loop(true);
+                        loading.playAnimation();
+                    }
+                });
             }
         });
 
@@ -168,13 +186,19 @@ public class ChatBoxActivity extends AppCompatActivity  {
                             chatBoxAdapter.notifyDataSetChanged();
                             //set the adapter for the recycler view
                             myRecylerView.setAdapter(chatBoxAdapter);
-                            myRecylerView.smoothScrollToPosition(myRecylerView.getAdapter().getItemCount());
+                            myRecylerView.scrollToPosition(myRecylerView.getAdapter().getItemCount()-1);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        loading.loop(false);
+                        loading.setVisibility(View.INVISIBLE);
                     }
+
                 });
+
             }
+
         });
 
         socket.on("userjoinedthechat", new Emitter.Listener() {
@@ -186,14 +210,29 @@ public class ChatBoxActivity extends AppCompatActivity  {
                         Log.e("userjoinedthechat","실행됨");
                         String data = (String) args[0];
                         Toast.makeText(ChatBoxActivity.this, data, Toast.LENGTH_SHORT).show();
-                        //Log.e("load","방출됨");
-                        //socket.emit("load");
+                    }
+                });
+            }
+        });
+
+
+
+        socket.on("loading_end", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("end","");
+                        loading.loop(false);
+                        loading.setVisibility(View.INVISIBLE);
                     }
                 });
             }
         });
 
         setContentView(R.layout.activity_chat_box);
+        loading=findViewById(R.id.animation_view);
 
         ImageButton logout = findViewById(R.id.logout);
 
@@ -248,6 +287,7 @@ public class ChatBoxActivity extends AppCompatActivity  {
             if(!messagetxt.getText().toString().isEmpty()){
                 socket.emit("messagedetection", Name, messagetxt.getText().toString(), null, ID);
                 messagetxt.setText(" ");
+
             }
         }
         });
@@ -267,6 +307,9 @@ public class ChatBoxActivity extends AppCompatActivity  {
                 byte[] b = baos.toByteArray();
                 String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
                 Log.e("encoding", encodedImage);
+                loading.setVisibility(View.VISIBLE);
+                loading.loop(true);
+                loading.playAnimation();
                 socket.emit("messagedetection", Name, null, encodedImage, ID);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

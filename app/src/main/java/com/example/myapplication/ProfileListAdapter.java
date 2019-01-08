@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -75,7 +76,7 @@ public class ProfileListAdapter extends BaseAdapter {
         LinearLayout make_call = convertView.findViewById(R.id.phone_layout);
         LinearLayout make_mail = convertView.findViewById(R.id.email_layout);
         TextView modify_contact = convertView.findViewById(R.id.name);
-        TextView invite_contact = convertView.findViewById(R.id.inviteButton);
+        ImageView invite_contact = convertView.findViewById(R.id.inviteButton);
 
         make_call.setOnClickListener(new View.OnClickListener() {
             @Override

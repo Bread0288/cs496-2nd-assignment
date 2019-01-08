@@ -11,20 +11,26 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        android:background="#FCE9A9">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="#FCE9A9">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:outlineSpotShadowColor="#FCC856"
+            android:outlineAmbientShadowColor="#FCC856"
+            android:background="#FCE9A9"
+            >
 
             <EditText
                 android:id="@+id/numlistSearch"
@@ -32,7 +38,10 @@
                 android:layout_height="60dp"
                 android:hint="@string/search_hint"
                 android:inputType="text"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:background="#FCE9A9"
+                android:outlineAmbientShadowColor="#FCC856"
+                android:outlineSpotShadowColor="#FCC856"/>
 
             <ListView
                 android:id="@+id/numberlist"
@@ -40,8 +49,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true">
-
+                android:layout_alignParentTop="true"
+                android:background="#FCE9A9">
             </ListView>
 
         </LinearLayout>
