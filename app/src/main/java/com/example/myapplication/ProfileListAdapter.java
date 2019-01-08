@@ -125,13 +125,13 @@ public class ProfileListAdapter extends BaseAdapter {
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(_context)
                 //set message, title, and icon
                 .setTitle("Invite")
-                .setMessage("CHATAPP으로 "+name+"님을 초대하시겠습니까? 확인을 누르시면 메세지 앱으로 이동합니다.")
+                .setMessage("CHEESE CHAT으로 "+name+"님을 초대하시겠습니까? 확인을 누르시면 메세지 앱으로 이동합니다.")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         String smsNumber = phone;
-                        String smsText = "CHATAPP을 설치하고 친구와 채팅을 즐기세요!\n https://github.com/Bread0288/cs496-2nd-assignment";
+                        String smsText = "CHEESE CHAT을 설치하고 친구와 채팅을 즐기세요!\n https://github.com/Bread0288/cs496-2nd-assignment";
 
                         Uri uri = Uri.parse("smsto:" + smsNumber);
                         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
