@@ -132,7 +132,6 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
                     holder.ProfileName.setText(m.getName());
                     holder.ProfilePhone.setText(m.getPhonenumber());
 
-
                     new MaterialStyledDialog.Builder(_context)
                             .setIcon(R.drawable.ic_phonenumber)
                             .setTitle("PROFILE")
@@ -187,7 +186,6 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
                                     }catch(OperationApplicationException e){
                                         e.printStackTrace();
                                     }
-
                                     Toast.makeText(_context, "Contact added", Toast.LENGTH_LONG).show();
                                     dialog.dismiss();
                                 }
